@@ -1,0 +1,8 @@
+{% extends "lie_base.html" %}
+
+{% block title %}Detail for {{ object.id }}{% endblock %}
+
+{% block content %}
+    <p>Lie: {{ object.lie }}</p>
+    <a href="/lies/">Return</a>
+{% endblock %}
