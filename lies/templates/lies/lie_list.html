@@ -4,13 +4,7 @@
 
 
 {%block content %}
-    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-
-    <form action="/lies/add/" method="post">
-        <input type="text" name="lie"  value="" />
-        <input type="submit" value="Add" />
-    </form>
-
+    <p><a href="/lies/add/">Add New</a></p>
     {% for lie in object_list %}
         <p>{{ lie.lie }}<br/><a href="/lies/{{ lie.id }}/">Detail</a></p>
     {% endfor %}

@@ -6,6 +6,9 @@ class Lie(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
 
+    def get_absolute_url(self):
+        return "/lies/%i/" % self.id
+
 class Vote(models.Model):
     lie = models.ForeignKey(Lie)
     value = models.IntegerField()
