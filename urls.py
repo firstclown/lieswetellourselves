@@ -14,4 +14,6 @@ urlpatterns = patterns('',
     # Uncomment the next line for to enable the admin:
     # (r'^admin/(.*)', admin.site.root),
     (r'^lies/', include('lieswetellourselves.lies.urls')),
+    (r'^site_media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': '/home/firstclown/Projects/lieswetellourselves/media'}),
+
 )

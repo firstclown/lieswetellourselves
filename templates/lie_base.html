@@ -1,10 +1,28 @@
 <html>
     <head>
         <title>{% block title %}{% endblock%}</title>
+        <!-- css -->
+        <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.2/build/reset-fonts-grids/reset-fonts-grids.css">
+        <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.2/build/base/base-min.css">
+        <link rel="stylesheet" type="text/css" href="/site_media/lies.css"/>
+        <!-- js -->
+        <script type="text/javascript" src="http://yui.yahooapis.com/combo?2.5.2/build/yahoo-dom-event/yahoo-dom-event.js&2.5.2/build/animation/animation-min.js&2.5.2/build/connection/connection-min.js"></script>
     </head>
     <body>
-        <div id="content">
-            {% block content %}{% endblock %}
+        <div id="doc">
+            <div id="hd">
+                <h1>LiesWeTellOurselves</h1>
+            </div>
+            <div id="bd">
+                <div id="yui-main">
+                <div class="yui-b">
+                    {% block content %}{% endblock %}
+                </div>
+                </div>
+            </div>
+            <div id="ft">
+                Copyright me
+            </div>
         </div>
     </body>
 </html>
