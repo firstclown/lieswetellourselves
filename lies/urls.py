@@ -12,9 +12,9 @@ info_dict = {
 
 urlpatterns = patterns('',
 #    (r'^$', 'index'),
-    (r'^$', 'django.views.generic.list_detail.object_list', info_dict),
-    (r'^add/$', 'django.views.generic.create_update.create_object', {'form_class': LieForm}),
-    (r'^add_vote/$', 'lieswetellourselves.lies.views.add_vote'),
+    url(r'^$', 'django.views.generic.list_detail.object_list', info_dict, name='index'),
+    url(r'^add/$', 'django.views.generic.create_update.create_object', {'form_class': LieForm}),
+    url(r'^add_vote/$', 'lieswetellourselves.lies.views.add_vote'),
 #    (r'^add/$', 'lieswetellourselves.lies.views.add'),
 #    (r'^(?P<lie_id>\d+)/$', 'detail'),
     url(r'^(?P<object_id>\d+)/$', 'django.views.generic.list_detail.object_detail', info_dict, name='lie_detail'),
