@@ -6,6 +6,6 @@
 {%block content %}
     <p><a href="/lies/add/">Add New</a></p>
     {% for lie in object_list %}
-        <p>{{ lie.lie }}<br/><a href="/lies/{{ lie.id }}/">Detail</a></p>
+        <p>{{ lie.lie }}<br/><a href="{{ lie.get_absolute_url }}">Detail</a></p>
     {% endfor %}
 {% endblock %}
