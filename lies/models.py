@@ -58,4 +58,6 @@ class Vote(models.Model):
     value = models.IntegerField()
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
+    def to_str(self):
+        "For %s with value %i" % (lie.id, value)
 

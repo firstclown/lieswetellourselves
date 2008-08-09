@@ -20,7 +20,7 @@ class TestLie(TestCase):
         self.assertContains(res, lieString, 1)
 
     def testAddVote(self):
-        res = self.client.post('/lies/add_vote/', {'lie_id': 1, 'vote': 'up'})
+        res = self.client.post('/lies/add_vote/', {'lie_id': '1', 'vote': 'up'})
         testLie = Lie.objects.all().filter(id=1)[0]
         self.assertEquals(testLie.vote_total(), 1)
         res = self.client.post('/lies/add_vote/', {'lie_id': 1, 'vote': 'up'})

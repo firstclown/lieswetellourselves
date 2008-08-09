@@ -7,7 +7,10 @@
         <p><a href="/lies/add/">Add New</a></p>
         <ul id="lie_list">
         {% for lie in object_list %}
-            <li class="lie_item"><span class="vote-total">{{ lie.vote_total }}</span><span class="lie">{{ lie.lie }}</span></li>
+            <li id="lie_{{lie.id}}" class="lie_item"><span class="vote-total">{{ lie.vote_total }}</span><span class="lie">{{ lie.lie }}</span></li>
         {% endfor %}
         </ul>
+        <div id="vote" style="visibility:hidden;z-index=2;position:absolute;">
+            <a href="" id="vote_up">UP</a> | <a href="" id="vote_down">DOWN</a>
+        </div>
 {% endblock %}

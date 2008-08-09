@@ -18,4 +18,7 @@ def add_vote(request):
     except(IndexError):
         pass
 
-    return HttpResponseRedirect(urlresolvers.reverse('index'))
+    if(request.is_ajax()):
+        return render_to_response('ajax_vote.html')
+    else:
+        return HttpResponseRedirect(urlresolvers.reverse('index'))
