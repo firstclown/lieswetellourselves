@@ -1,27 +1,27 @@
 html {
-    background-color: #000;
+    background-color: #060080;
 }
 body {
-    background-color: #000;
+    background-color: #060080;
 }
 
 #doc {
-    background-color: #000;
+    background-color: #060080;
 }
 
 #bd {
-    color: #33F;
+    color: #060080;
     font-size: 189%;
 }
 
 #hd {
-    background-color: #000;
+    background-color: #060080;
     letter-spacing:-2;
     overflow: visible;
 }
 
 #hd h1 {
-    color: #33F;
+    color: #0c00ff;
     font-size: 500%;
     padding: 0.5%;
     margin: 0.5%;
@@ -31,9 +31,19 @@ body {
 
 #bd ul li {
     padding: 3%;
+    color: #c2bfff;
     list-style-type: none;
-    border: #000 solid 1px;
+    border: #060080 solid 1px;
     margin: 1%;
-    background-color: #006;
+    background-color: #0c00ff;
     font-size:197%;
+}
+
+#bd .vote-total {
+    font-size:65%;
+    color:#060080;
+    font-weight:bold;
+    position:relative;
+    top:-30px;
+    left:99%;
 }
