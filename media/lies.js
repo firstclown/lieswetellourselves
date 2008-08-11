@@ -50,10 +50,33 @@ function ajax_vote(e, element){
     YAHOO.util.Event.preventDefault(e);
 }
 
+function ajax_add(e){
+    var callback =
+	{
+	  success: function(o) { 
+      },
+	  failure: function(o) {
+          var message_area = document.getElementById('message');
+          message_area.innerHTML = "Can't currently connect to server. Imagine a Fail Whale picture here.";
+          var anim_message = new YAHOO.util.Anim('message', { opacity: { from: 0,to: 1 }}, 1, YAHOO.util.Easing.easeIn);
+          anim_message.animate();
+      },
+	  timeout: 5000,
+	}
+    var lie = document.getElementById('id_lie').value;
+    //Must get parent because, even though listener is on A tag,
+    //it will pass the img element here
+    var transaction = YAHOO.util.Connect.asyncRequest('POST', '/lies/add/', callback, "lie="+lie);
+    YAHOO.util.Event.preventDefault(e);
+}
 function init(){
     var allLies = YAHOO.util.Dom.getElementsByClassName('lie_item');
+    //Don't put vote on the first item, which is the add item
+    allLies.shift();
     YAHOO.util.Event.addListener(allLies, 'mouseover', show_vote);
     YAHOO.util.Event.addListener(allLies, 'mouseout', hide_vote);
+
+    YAHOO.util.Event.addListener('add_lie_submit', 'click', ajax_add);
 }
 
 YAHOO.util.Event.onDOMReady(init);
