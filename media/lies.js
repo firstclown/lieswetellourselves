@@ -3,7 +3,7 @@ function show_vote(e) {
     var itemRegion = YAHOO.util.Region.getRegion(this);
     var itemHeight = itemRegion.bottom - itemRegion.top;
     var itemWidth = itemRegion.right - itemRegion.left;
-    var voteRegion = YAHOO.util.Region.getRegion(document.getElementById('vote'));
+    var voteRegion = YAHOO.util.Region.getRegion(YAHOO.util.Dom.get('vote'));
     var voteHeight = voteRegion.bottom - voteRegion.top;
     var voteWidth = voteRegion.right - voteRegion.left;
     YAHOO.util.Dom.setX('vote', location[0] + itemWidth/2 - voteWidth/2);
@@ -25,6 +25,12 @@ function hide_vote(e){
     }
 }
 
+function display_failure(o){
+    var message_area = YAHOO.util.Dom.get('message');
+    message_area.innerHTML = "Can't currently connect to server. Imagine a Fail Whale picture here.";
+    var anim_message = new YAHOO.util.Anim('message', { opacity: { from: 0,to: 1 }}, 1, YAHOO.util.Easing.easeIn);
+    anim_message.animate();
+}
 function ajax_vote(e, element){
     var callback =
 	{
@@ -33,12 +39,7 @@ function ajax_vote(e, element){
           var vote = YAHOO.lang.JSON.parse(o.responseText);
           vote_display.innerHTML = vote.vote_total_value;
       },
-	  failure: function(o) {
-          var message_area = document.getElementById('message');
-          message_area.innerHTML = "Can't currently connect to server. Imagine a Fail Whale picture here.";
-          var anim_message = new YAHOO.util.Anim('message', { opacity: { from: 0,to: 1 }}, 1, YAHOO.util.Easing.easeIn);
-          anim_message.animate();
-      },
+	  failure: display_failure,
 	  timeout: 5000,
 	}
     var id = element.id.match(/\d+/)[0];
@@ -54,27 +55,58 @@ function ajax_add(e){
     var callback =
 	{
 	  success: function(o) { 
+          YAHOO.util.Dom.get('id_lie').value = '';
+          update_list();
       },
-	  failure: function(o) {
-          var message_area = document.getElementById('message');
-          message_area.innerHTML = "Can't currently connect to server. Imagine a Fail Whale picture here.";
-          var anim_message = new YAHOO.util.Anim('message', { opacity: { from: 0,to: 1 }}, 1, YAHOO.util.Easing.easeIn);
-          anim_message.animate();
-      },
+	  failure: display_failure,
 	  timeout: 5000,
 	}
-    var lie = document.getElementById('id_lie').value;
+    var lie = YAHOO.util.Dom.get('id_lie').value;
     //Must get parent because, even though listener is on A tag,
     //it will pass the img element here
     var transaction = YAHOO.util.Connect.asyncRequest('POST', '/lies/add/', callback, "lie="+lie);
     YAHOO.util.Event.preventDefault(e);
 }
-function init(){
+
+function update_list(){
+    var callback = {
+        success: function(o){
+            var lies = YAHOO.lang.JSON.parse(o.responseText);
+            var list = YAHOO.util.Dom.get('lie_list');
+            var old_elements = YAHOO.util.Dom.getChildren(list);
+            for(var i in old_elements){
+                list.removeChild(old_elements[i]);
+            }
+            for(var i in lies){
+                var new_element = document.createElement('li');
+                new_element.id = "lie_"+lies[i].id;
+                YAHOO.util.Dom.addClass(new_element, 'lie_item');
+                var vote_span = document.createElement('span');
+                YAHOO.util.Dom.addClass(vote_span, 'vote_total');
+                vote_span.innerHTML = lies[i].vote_total_value;
+                new_element.appendChild(vote_span);
+                var lie_span = document.createElement('span');
+                YAHOO.util.Dom.addClass(lie_span, 'lie');
+                lie_span.innerHTML = lies[i].lie;
+                new_element.appendChild(lie_span);
+                list.appendChild(new_element);
+            }
+            registerListItems();
+        },
+        failure:display_failure,
+        timeout:5000,
+    }
+    var transaction = YAHOO.util.Connect.asyncRequest('GET', '/lies/', callback);
+}
+
+function registerListItems(){
     var allLies = YAHOO.util.Dom.getElementsByClassName('lie_item');
-    //Don't put vote on the first item, which is the add item
-    allLies.shift();
     YAHOO.util.Event.addListener(allLies, 'mouseover', show_vote);
     YAHOO.util.Event.addListener(allLies, 'mouseout', hide_vote);
+}
+
+function init(){
+    registerListItems();
 
     YAHOO.util.Event.addListener('add_lie_submit', 'click', ajax_add);
 }

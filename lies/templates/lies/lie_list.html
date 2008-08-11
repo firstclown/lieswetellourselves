@@ -4,11 +4,11 @@
 
 
 {%block content %}
+        <div id="new_lie">
+            {{ form.as_table }}
+            <input id="add_lie_submit" type="submit" value="Add"/>
+        </div>
         <ul id="lie_list">
-            <li id="new_lie" class="lie_item">
-                {{ form.as_table }}
-                <input id="add_lie_submit" type="submit" value="Add"/>
-            </li>
         {% for lie in object_list %}
             <li id="lie_{{lie.id}}" class="lie_item"><span class="vote_total">{{ lie.vote_total }}</span><span class="lie">{{ lie.lie }}</span></li>
         {% endfor %}

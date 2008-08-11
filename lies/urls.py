@@ -8,12 +8,11 @@ from lieswetellourselves.lies.forms import LieForm
 
 info_dict = {
     'queryset': Lie.objects.all(),
-    'extra_context':{'form':LieForm},
 }
 
 urlpatterns = patterns('',
 #    (r'^$', 'index'),
-    url(r'^$', 'django.views.generic.list_detail.object_list', info_dict, name='index', ),
+    url(r'^$', 'lieswetellourselves.lies.views.list_lies', name='index', ),
     url(r'^add/$', 'django.views.generic.create_update.create_object', {'form_class': LieForm}),
     url(r'^add_vote/$', 'lieswetellourselves.lies.views.add_vote'),
 #    (r'^add/$', 'lieswetellourselves.lies.views.add'),
