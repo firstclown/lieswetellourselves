@@ -15,12 +15,17 @@ def add_vote(request):
     lie = None
     try:
         lie = Lie.objects.filter(id=request.POST['lie_id'])[0]
-        if(request.POST['vote'] == 'up'):
-            Vote(lie=lie, value=1).save()
-        elif(request.POST['vote'] == 'down'):
-            Vote(lie=lie, value=-1).save()
-        lie.modified = datetime.now()
-        lie.save()
+        voted_items = request.session['voted_items'] if request.session.has_key('voted_items') else []
+        if(lie.id not in voted_items):
+            if(request.POST['vote'] == 'up'):
+                Vote(lie=lie, value=1).save()
+            elif(request.POST['vote'] == 'down'):
+                Vote(lie=lie, value=-1).save()
+            voted_items.append(lie.id)
+            request.session['voted_items'] = voted_items
+
+            lie.modified = datetime.now()
+            lie.save()
         lie.vote_total_value = lie.vote_total()
     except(IndexError):
         pass

@@ -115,6 +115,7 @@ function init(){
     registerListItems();
 
     YAHOO.util.Event.addListener('add_lie_submit', 'click', ajax_add);
+    YAHOO.util.Event.addListener('vote', 'mouseout', hide_vote);
 
     LIES.interval = window.setInterval(update_list, 10000);
 }
