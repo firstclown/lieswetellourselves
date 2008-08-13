@@ -4,6 +4,7 @@ from django.core import urlresolvers,serializers
 from lieswetellourselves.lies.models import Lie,Vote
 from lieswetellourselves.lies.forms import LieForm
 from lieswetellourselves.lies.json_encode import json_encode
+from datetime import datetime
 
 def add(request):
     lie = Lie(lie=request.POST['lie'])
@@ -18,6 +19,8 @@ def add_vote(request):
             Vote(lie=lie, value=1).save()
         elif(request.POST['vote'] == 'down'):
             Vote(lie=lie, value=-1).save()
+        lie.modified = datetime.now()
+        lie.save()
         lie.vote_total_value = lie.vote_total()
     except(IndexError):
         pass

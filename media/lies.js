@@ -1,3 +1,5 @@
+var LIES;
+
 function show_vote(e) {
     var location = YAHOO.util.Dom.getXY(this);
     var itemRegion = YAHOO.util.Region.getRegion(this);
@@ -30,6 +32,7 @@ function display_failure(o){
     message_area.innerHTML = "Can't currently connect to server. Imagine a Fail Whale picture here.";
     var anim_message = new YAHOO.util.Anim('message', { opacity: { from: 0,to: 1 }}, 1, YAHOO.util.Easing.easeIn);
     anim_message.animate();
+    window.clearInterval(LIES.interval);
 }
 function ajax_vote(e, element){
     var callback =
@@ -38,6 +41,9 @@ function ajax_vote(e, element){
           var vote_display = YAHOO.util.Dom.getFirstChildBy(element, function(e){return e.className == 'vote_total';})
           var vote = YAHOO.lang.JSON.parse(o.responseText);
           vote_display.innerHTML = vote.vote_total_value;
+          var flash_vote = new YAHOO.util.ColorAnim(vote_display, { 'color': { from: '#FFFF00', to: '#060080' }}, 2, YAHOO.util.Easing.easeIn);
+          flash_vote.animate();
+         // update_list();
       },
 	  failure: display_failure,
 	  timeout: 5000,
@@ -109,6 +115,8 @@ function init(){
     registerListItems();
 
     YAHOO.util.Event.addListener('add_lie_submit', 'click', ajax_add);
+
+    LIES.interval = window.setInterval(update_list, 10000);
 }
 
 YAHOO.util.Event.onDOMReady(init);
