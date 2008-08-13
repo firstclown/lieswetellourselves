@@ -62,6 +62,7 @@ class TestLie(TestCase):
         self.assertEquals(testLie.vote_total(), 1)
         res = self.client.post('/lies/add_vote/', {'lie_id': 1, 'vote': 'up'})
         self.assertEquals(testLie.vote_total(), 1)
+        self.assertContains(res, 'dupe', 1)
         self.client = Client()
         res = self.client.post('/lies/add_vote/', {'lie_id': 1, 'vote': 'up'})
         self.assertEquals(testLie.vote_total(), 2)

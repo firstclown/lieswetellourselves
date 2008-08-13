@@ -39,11 +39,13 @@ function ajax_vote(e, element){
 	{
 	  success: function(o) { 
           var vote_display = YAHOO.util.Dom.getFirstChildBy(element, function(e){return e.className == 'vote_total';})
-          var vote = YAHOO.lang.JSON.parse(o.responseText);
-          vote_display.innerHTML = vote.vote_total_value;
-          var flash_vote = new YAHOO.util.ColorAnim(vote_display, { 'color': { from: '#FFFF00', to: '#060080' }}, 2, YAHOO.util.Easing.easeIn);
-          flash_vote.animate();
-         // update_list();
+          if(o.responseText != 'dupe'){
+              var vote = YAHOO.lang.JSON.parse(o.responseText);
+              vote_display.innerHTML = vote.vote_total_value;
+              var flash_vote = new YAHOO.util.ColorAnim(vote_display, { 'color': { from: '#FFFF00', to: '#060080' }}, 2, YAHOO.util.Easing.easeIn);
+              flash_vote.animate();
+             // update_list();
+          }
       },
 	  failure: display_failure,
 	  timeout: 5000,

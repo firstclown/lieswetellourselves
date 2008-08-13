@@ -26,7 +26,9 @@ def add_vote(request):
 
             lie.modified = datetime.now()
             lie.save()
-        lie.vote_total_value = lie.vote_total()
+            lie.vote_total_value = lie.vote_total()
+        else:
+            return HttpResponse('dupe')
     except(IndexError):
         pass
 
