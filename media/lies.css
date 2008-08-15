@@ -61,3 +61,11 @@ body {
     padding-right:5px;
     padding-left:5px;
 }
+
+#bd #description {
+    color:#0c00ff;
+}
+
+#bd #description b {
+    font-variant: small-caps;
+}
