@@ -15,7 +15,7 @@ def add_vote(request):
     lie = None
     try:
         lie = Lie.objects.filter(id=request.POST['lie_id'])[0]
-        voted_items = request.session['voted_items'] if request.session.has_key('voted_items') else []
+        voted_items = request.session['voted_items'] if 'voted_items' in request.session else []
         if(lie.id not in voted_items):
             if(request.POST['vote'] == 'up'):
                 Vote(lie=lie, value=1).save()

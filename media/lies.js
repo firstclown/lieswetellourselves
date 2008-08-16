@@ -32,7 +32,6 @@ function display_failure(o){
     message_area.innerHTML = "Can't currently connect to server. Imagine a Fail Whale picture here.";
     var anim_message = new YAHOO.util.Anim('message', { opacity: { from: 0,to: 1 }}, 1, YAHOO.util.Easing.easeIn);
     anim_message.animate();
-    window.clearInterval(LIES.interval);
 }
 function ajax_vote(e, element){
     var callback =
@@ -50,12 +49,14 @@ function ajax_vote(e, element){
 	  failure: display_failure,
 	  timeout: 5000,
 	}
-    var id = element.id.match(/\d+/)[0];
+    var ids = element.id.match(/\d+/);
+    var id = ids[0];
     var target = YAHOO.util.Event.getTarget(e);
     //Must get parent because, even though listener is on A tag,
     //it will pass the img element here
-    var type = target.parentNode.id.match(/vote_(.+)/)[1];
-    var transaction = YAHOO.util.Connect.asyncRequest('POST', '/lies/add_vote/', callback, "vote="+type+"&lie_id="+id);
+    var types = target.parentNode.id.match(/vote_(.+)/);
+    var type = types[1];
+    var transaction = YAHOO.util.Connect.asyncRequest('POST', '/add_vote/', callback, "vote="+type+"&lie_id="+id);
     YAHOO.util.Event.preventDefault(e);
 }
 
@@ -72,7 +73,7 @@ function ajax_add(e){
     var lie = YAHOO.util.Dom.get('id_lie').value;
     //Must get parent because, even though listener is on A tag,
     //it will pass the img element here
-    var transaction = YAHOO.util.Connect.asyncRequest('POST', '/lies/add/', callback, "lie="+lie);
+    var transaction = YAHOO.util.Connect.asyncRequest('POST', '/add/', callback, "lie="+lie);
     YAHOO.util.Event.preventDefault(e);
 }
 
@@ -104,7 +105,7 @@ function update_list(){
         failure:display_failure,
         timeout:5000,
     }
-    var transaction = YAHOO.util.Connect.asyncRequest('GET', '/lies/', callback);
+    var transaction = YAHOO.util.Connect.asyncRequest('GET', '/', callback);
 }
 
 function registerListItems(){
@@ -119,7 +120,7 @@ function init(){
     YAHOO.util.Event.addListener('add_lie_submit', 'click', ajax_add);
     YAHOO.util.Event.addListener('vote', 'mouseout', hide_vote);
 
-    LIES.interval = window.setInterval(update_list, 10000);
+    window.setInterval(update_list, 10000);
 }
 
 YAHOO.util.Event.onDOMReady(init);

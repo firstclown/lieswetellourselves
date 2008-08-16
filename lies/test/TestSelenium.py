@@ -12,7 +12,7 @@ class TestSelenium(TestCase):
     
     def test_verifyForm(self):
         sel = self.selenium
-        sel.open("/lies/")
+        sel.open("/")
         try: self.failUnless(sel.is_element_present("id_lie"))
         except AssertionError, e: self.verificationErrors.append(str(e))
         try: self.failUnless(sel.is_element_present("add_lie_submit"))
@@ -21,15 +21,16 @@ class TestSelenium(TestCase):
     def test_voteSystem(self):
         sel = self.selenium
         sel.set_speed("200")
-        sel.open("/lies/")
+        sel.open("/")
         self.assertEqual("0", sel.get_text("//li[@id='lie_4']/span[1]"))
         sel.mouse_over("//li[@id='lie_4']")
         sel.click("//a[@id='vote_up']/img")
         self.assertEqual("1", sel.get_text("//li[@id='lie_4']/span[1]"))
         sel.click("//a[@id='vote_down']/img")
-        self.assertEqual("0", sel.get_text("//li[@id='lie_4']/span[1]"))
+        self.assertEqual("1", sel.get_text("//li[@id='lie_4']/span[1]"))
+        sel.mouse_over("//li[@id='lie_5']")
         sel.click("//a[@id='vote_down']/img")
-        self.assertEqual("-1", sel.get_text("//li[@id='lie_4']/span[1]"))
+        self.assertEqual("-1", sel.get_text("//li[@id='lie_5']/span[1]"))
     
     def tearDown(self):
         self.selenium.stop()
