@@ -18,6 +18,22 @@ class TestSelenium(TestCase):
         try: self.failUnless(sel.is_element_present("add_lie_submit"))
         except AssertionError, e: self.verificationErrors.append(str(e))
 
+    def test_enterVote(self):
+        sel = self.selenium
+        sel.open('/')
+        sel.type('id_lie', 'Testing Via Selenium')
+        sel.click('add_lie_submit')
+        sel.set_speed(1000)
+        self.assertEqual('Testing Via Selenium', sel.get_text("//li[1]/span[2]"))
+
+    def test_enterVoteOnEnterPress(self):
+        sel = self.selenium
+        sel.open('/')
+        sel.type('id_lie', 'Testing Via Selenium')
+        sel.key_press('id_lie', r'\13')
+        sel.set_speed(1000)
+        self.assertEqual('Testing Via Selenium', sel.get_text("//li[1]/span[2]"))
+
     def test_voteSystem(self):
         sel = self.selenium
         sel.set_speed("200")
@@ -26,11 +42,6 @@ class TestSelenium(TestCase):
         sel.mouse_over("//li[@id='lie_4']")
         sel.click("//a[@id='vote_up']/img")
         self.assertEqual("1", sel.get_text("//li[@id='lie_4']/span[1]"))
-        sel.click("//a[@id='vote_down']/img")
-        self.assertEqual("1", sel.get_text("//li[@id='lie_4']/span[1]"))
-        sel.mouse_over("//li[@id='lie_5']")
-        sel.click("//a[@id='vote_down']/img")
-        self.assertEqual("-1", sel.get_text("//li[@id='lie_5']/span[1]"))
     
     def tearDown(self):
         self.selenium.stop()

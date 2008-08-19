@@ -5,8 +5,10 @@
 
 {%block content %}
         <div id="new_lie">
-            {{ form.as_table }}
-            <input id="add_lie_submit" type="submit" value="Add"/>
+            <form id='lie_submit' action='' method='POST'>
+                {{ form.as_table }}
+                <input id="add_lie_submit" type="submit" value="Add"/>
+            </form>
         </div>
         <ul id="lie_list">
         {% for lie in object_list %}
@@ -14,6 +16,6 @@
         {% endfor %}
         </ul>
         <div id="vote" style="visibility:hidden;z-index=2;position:absolute;">
-            <a href="" id="vote_up" class="vote_action"><img src="http://media.lieswetellourselves.com/up-thumb.png"/></a>   <a href="" id="vote_down" class="vote_action"><img src="http://media.lieswetellourselves.com/down-thumb.png"/></a>
+            <a href="" id="vote_up" class="vote_action"><img src="http://media.lieswetellourselves.com/up-thumb.png"/></a>   <!--a href="" id="vote_down" class="vote_action"><img src="http://media.lieswetellourselves.com/down-thumb.png"/></a-->
         </div>
 {% endblock %}

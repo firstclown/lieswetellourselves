@@ -12,9 +12,7 @@ function show_vote(e) {
     YAHOO.util.Dom.setY('vote', location[1] + itemHeight/2 - voteHeight/2);
     
     YAHOO.util.Event.removeListener('vote_up', 'click');
-    YAHOO.util.Event.removeListener('vote_down', 'click');
     YAHOO.util.Event.addListener('vote_up', 'click', ajax_vote, this);
-    YAHOO.util.Event.addListener('vote_down', 'click', ajax_vote, this);
     YAHOO.util.Dom.setStyle('vote', 'visibility', 'visible');
 }
 
@@ -23,7 +21,6 @@ function hide_vote(e){
     if(!YAHOO.util.Region.getRegion(this).contains(mousePos)){
         YAHOO.util.Dom.setStyle('vote', 'visibility', 'hidden');
         YAHOO.util.Event.removeListener('vote_up', 'click');
-        YAHOO.util.Event.removeListener('vote_down', 'click');
     }
 }
 

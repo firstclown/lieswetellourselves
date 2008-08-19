@@ -20,9 +20,9 @@ def add_vote(request):
             if(request.POST['vote'] == 'up'):
                 Vote(lie=lie, value=1).save()
                 voted_items.append(lie.id)
-            elif(request.POST['vote'] == 'down'):
-                Vote(lie=lie, value=-1).save()
-                voted_items.append(lie.id)
+#            elif(request.POST['vote'] == 'down'):
+#                Vote(lie=lie, value=-1).save()
+#                voted_items.append(lie.id)
             request.session['voted_items'] = voted_items
 
             lie.modified = datetime.now()

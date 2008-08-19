@@ -29,12 +29,12 @@ class TestLie(TestCase):
         self.assertEqual(testLie.vote_total(), 2)
         self.client = Client()
         res = self.client.post('/add_vote/', {'lie_id': 1, 'vote': 'down'},HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        self.assertEqual(testLie.vote_total(), 1)
+        self.assertEqual(testLie.vote_total(), 2)
         self.client = Client()
         res = self.client.post('/add_vote/', {'lie_id': 1, 'vote': 'boo'},HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        self.assertEqual(testLie.vote_total(), 1)
+        self.assertEqual(testLie.vote_total(), 2)
         self.assertContains(res, '"id": 1')
-        self.assertContains(res, '"vote_total_value": 1')
+        self.assertContains(res, '"vote_total_value": 2')
 
     def testAddVote(self):
         res = self.client.post('/add_vote/', {'lie_id': '1', 'vote': 'up'})
@@ -45,10 +45,10 @@ class TestLie(TestCase):
         self.assertEqual(testLie.vote_total(), 2)
         self.client = Client()
         res = self.client.post('/add_vote/', {'lie_id': 1, 'vote': 'down'})
-        self.assertEqual(testLie.vote_total(), 1)
+        self.assertEqual(testLie.vote_total(), 2)
         self.client = Client()
         res = self.client.post('/add_vote/', {'lie_id': 1, 'vote': 'boo'})
-        self.assertEqual(testLie.vote_total(), 1)
+        self.assertEqual(testLie.vote_total(), 2)
         self.assertRedirects(res, '/')
 
     def testVoteOnMissingLie(self):
@@ -75,6 +75,6 @@ class TestLie(TestCase):
         res = self.client.post('/add_vote/', {'lie_id': 2, 'vote': 'up'},HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(self.client.session['voted_items'], [1, 2])
         res = self.client.post('/add_vote/', {'lie_id': 3, 'vote': 'down'},HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        self.assertEqual(self.client.session['voted_items'], [1, 2, 3])
+        self.assertEqual(self.client.session['voted_items'], [1, 2])
         res = self.client.post('/add_vote/', {'lie_id': 4, 'vote': 'aksdjfka'},HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        self.assertEqual(self.client.session['voted_items'], [1, 2, 3])
+        self.assertEqual(self.client.session['voted_items'], [1, 2])
