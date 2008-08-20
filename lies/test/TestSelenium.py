@@ -18,7 +18,7 @@ class TestSelenium(TestCase):
         try: self.failUnless(sel.is_element_present("add_lie_submit"))
         except AssertionError, e: self.verificationErrors.append(str(e))
 
-    def test_enterVote(self):
+    def test_enterLie(self):
         sel = self.selenium
         sel.open('/')
         sel.type('id_lie', 'Testing Via Selenium')
@@ -26,7 +26,7 @@ class TestSelenium(TestCase):
         sel.set_speed(1000)
         self.assertEqual('Testing Via Selenium', sel.get_text("//li[1]/span[2]"))
 
-    def test_enterVoteOnEnterPress(self):
+    def test_enterLieOnEnterPress(self):
         sel = self.selenium
         sel.open('/')
         sel.type('id_lie', 'Testing Via Selenium')
