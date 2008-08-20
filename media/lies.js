@@ -44,7 +44,7 @@ function ajax_vote(e, element){
           }
       },
 	  failure: display_failure,
-	  timeout: 5000,
+	  timeout: 9000,
 	}
     var ids = element.id.match(/\d+/);
     var id = ids[0];
@@ -65,7 +65,7 @@ function ajax_add(e){
           update_list();
       },
 	  failure: display_failure,
-	  timeout: 5000,
+	  timeout: 9000,
 	}
     var lie = YAHOO.util.Dom.get('id_lie').value;
     //Must get parent because, even though listener is on A tag,
@@ -100,7 +100,7 @@ function update_list(){
             registerListItems();
         },
         failure:display_failure,
-        timeout:5000,
+        timeout:9000,
     }
     var transaction = YAHOO.util.Connect.asyncRequest('GET', '/', callback);
 }
@@ -117,7 +117,7 @@ function init(){
     YAHOO.util.Event.addListener('add_lie_submit', 'click', ajax_add);
     YAHOO.util.Event.addListener('vote', 'mouseout', hide_vote);
 
-    window.setInterval(update_list, 10000);
+    window.setInterval(update_list, 20000);
 }
 
 YAHOO.util.Event.onDOMReady(init);

@@ -69,3 +69,9 @@ body {
 #bd #description b {
     font-variant: small-caps;
 }
+
+#bd #vote {
+    visibility:hidden;
+    z-index:2;
+    position:absolute;
+}
