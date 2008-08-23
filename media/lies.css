@@ -39,11 +39,24 @@ body {
     font-size:197%;
 }
 
-#bd .vote-total {
+#bd .vote_total {
     font-size:65%;
     color:#060080;
     font-weight:bold;
     position:relative;
-    top:-30px;
-    left:99%;
+    display:block;
+    top:-10px;
+    float:right;
+}
+
+#bd #message {
+    color:#060080;
+    background-color:yellow;
+    padding: 3%;
+    opacity:0;filter:alpha(opacity=0);
+}
+
+#bd .vote_action img {
+    opacity:0.8;filter:alpha(opacity=80);
+    padding:50px;
 }

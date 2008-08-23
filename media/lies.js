@@ -11,8 +11,8 @@ function show_vote(e) {
     
     YAHOO.util.Event.removeListener('vote_up', 'click');
     YAHOO.util.Event.removeListener('vote_down', 'click');
-    YAHOO.util.Event.addListener('vote_up', 'click', vote_up, this);
-    YAHOO.util.Event.addListener('vote_down', 'click', vote_down, this);
+    YAHOO.util.Event.addListener('vote_up', 'click', ajax_vote, this);
+    YAHOO.util.Event.addListener('vote_down', 'click', ajax_vote, this);
     YAHOO.util.Dom.setStyle('vote', 'visibility', 'visible');
 }
 
@@ -25,28 +25,29 @@ function hide_vote(e){
     }
 }
 
-function vote_up(e, element){
+function ajax_vote(e, element){
     var callback =
 	{
-	  success: function(o) {/*success handler code*/},
-	  failure: function(o) {/*failure handler code*/},
+	  success: function(o) { 
+          var vote_display = YAHOO.util.Dom.getFirstChildBy(element, function(e){return e.className == 'vote_total';})
+          var vote = YAHOO.lang.JSON.parse(o.responseText);
+          vote_display.innerHTML = vote.vote_total_value;
+      },
+	  failure: function(o) {
+          var message_area = document.getElementById('message');
+          message_area.innerHTML = "Can't currently connect to server. Imagine a Fail Whale picture here.";
+          var anim_message = new YAHOO.util.Anim('message', { opacity: { from: 0,to: 1 }}, 1, YAHOO.util.Easing.easeIn);
+          anim_message.animate();
+      },
 	  timeout: 5000,
 	}
     var id = element.id.match(/\d+/)[0];
-    var transaction = YAHOO.util.Connect.asyncRequest('POST', '/lies/add_vote/', callback, "vote=up&lie_id="+id);
+    var target = YAHOO.util.Event.getTarget(e);
+    //Must get parent because, even though listener is on A tag,
+    //it will pass the img element here
+    var type = target.parentNode.id.match(/vote_(.+)/)[1];
+    var transaction = YAHOO.util.Connect.asyncRequest('POST', '/lies/add_vote/', callback, "vote="+type+"&lie_id="+id);
     YAHOO.util.Event.preventDefault(e);
-}
-function vote_down(e, element){
-    var callback =
-	{
-	  success: function(o) { },
-	  failure: function(o) { },
-	  timeout: 5000,
-	}
-    var id = element.id.match(/\d+/)[0];
-    var transaction = YAHOO.util.Connect.asyncRequest('POST', '/lies/add_vote/', callback, "vote=down&lie_id="+id);
-    YAHOO.util.Event.preventDefault(e);
-
 }
 
 function init(){

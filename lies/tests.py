@@ -19,6 +19,19 @@ class TestLie(TestCase):
         res = self.client.get('/lies/')
         self.assertContains(res, lieString, 1)
 
+    def testAjaxAddVote(self):
+        res = self.client.post('/lies/add_vote/', {'lie_id': '1', 'vote': 'up'},HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        testLie = Lie.objects.all().filter(id=1)[0]
+        self.assertEquals(testLie.vote_total(), 1)
+        res = self.client.post('/lies/add_vote/', {'lie_id': 1, 'vote': 'up'},HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEquals(testLie.vote_total(), 2)
+        res = self.client.post('/lies/add_vote/', {'lie_id': 1, 'vote': 'down'},HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEquals(testLie.vote_total(), 1)
+        res = self.client.post('/lies/add_vote/', {'lie_id': 1, 'vote': 'boo'},HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEquals(testLie.vote_total(), 1)
+        self.assertContains(res, '"id": 1')
+        self.assertContains(res, '"vote_total_value": 1')
+
     def testAddVote(self):
         res = self.client.post('/lies/add_vote/', {'lie_id': '1', 'vote': 'up'})
         testLie = Lie.objects.all().filter(id=1)[0]
