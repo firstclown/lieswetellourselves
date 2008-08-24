@@ -75,3 +75,23 @@ body {
     z-index:2;
     position:absolute;
 }
+
+#ft {
+    color:#857fff;
+    font-size: 174%;
+    text-align:center;
+}
+
+#ft ul li {
+    list-style-type: none;
+    display: inline;
+    margin-left: 5px;
+    margin-right: 5px;
+#    border: #0c00ff 1px solid;
+    padding: 5px;
+}
+
+#ft a {
+    color: #857fff;
+}
+
