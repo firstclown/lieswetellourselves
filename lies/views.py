@@ -56,6 +56,6 @@ def list_lies_page(request,page_num):
     for lie in object_page.object_list:
         lie.vote_total_value = lie.vote_total()
     if(request.is_ajax()):
-        return HttpResponse(json_encode(object_page))
+        return HttpResponse(json_encode(object_page.object_list))
     else:
         return render_to_response('lies/lie_list.html', {'pager':object_page, 'form': LieForm()}, context_instance=RequestContext(request))

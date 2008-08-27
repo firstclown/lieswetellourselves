@@ -80,6 +80,7 @@ body {
     color:#857fff;
     font-size: 174%;
     text-align:center;
+    margin-top: 30px;
 }
 
 #ft ul li {
@@ -95,3 +96,13 @@ body {
     color: #857fff;
 }
 
+#bd #pager {
+    font-size: 174%;
+    text-align:center;
+}
+
+#bd #pager a {
+    color: #857fff;
+    padding: 10px;
+    border: #0c00ff 2px solid;
+}
