@@ -9,9 +9,19 @@ class TestLie(TestCase):
 
     def testMainPage(self):
         res = self.client.get('/')
-        self.assertContains(res, "Google App Engine Rocks", 1)
+        self.assertContains(res, "Lie number 7", 1)
         self.assertContains(res, escape("I'm not worried about dying"), 1)
-        self.assertContains(res, 'I get angry for good reasons', 1)
+        self.assertContains(res, 'Lie number 13', 1)
+
+    def testMainPagePaging(self):
+        res = self.client.get('/')
+        self.assertContains(res, 'id="lie_4"', 1)
+        self.assertNotContains(res, 'id="lie_3"')
+
+    def testSecondPagePaging(self):
+        res = self.client.get('/page/2/')
+        self.assertNotContains(res, 'id="lie_4"')
+        self.assertContains(res, 'id="lie_3"', 1)
 
     def testAdd(self):
         lieString = 'This test failed'

@@ -102,7 +102,7 @@ function update_list(){
         failure:display_failure,
         timeout:9000,
     }
-    var transaction = YAHOO.util.Connect.asyncRequest('GET', '/', callback);
+    var transaction = YAHOO.util.Connect.asyncRequest('GET', window.location.href, callback);
 }
 
 function registerListItems(){
