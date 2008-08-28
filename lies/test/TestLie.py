@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.test.client import Client
+from django.conf import settings
 from lieswetellourselves.lies.models import Lie
 from django.utils.html import escape
 
@@ -78,3 +79,7 @@ class TestLie(TestCase):
         self.assertEqual(self.client.session['voted_items'], [1, 2])
         res = self.client.post('/add_vote/', {'lie_id': 4, 'vote': 'aksdjfka'},HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(self.client.session['voted_items'], [1, 2])
+    
+    def testCssLocation(self):
+        res = self.client.post('/')
+        self.assertContains(res, '"' + settings.MEDIA_URL + 'lies.css"')
