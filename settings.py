@@ -40,7 +40,7 @@ MEDIA_ROOT = '/home/firstclown/Projects/lieswetellourselves/media/'
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
-MEDIA_URL = '/site-media/'
+MEDIA_URL = '/media/'
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
@@ -73,6 +73,8 @@ TEMPLATE_DIRS = (
     '/home/firstclown/Projects/lieswetellourselves/templates/',
     '/home/firstclown/Projects/lieswetellourselves/lies/templates/',
 )
+
+TEMPLATE_CONTEXT_PROCESSORS = ('lieswetellourselves.lies.context_processors.media_url',)
 
 INSTALLED_APPS = (
     'django.contrib.auth',

@@ -1,6 +1,7 @@
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect,HttpResponse
 from django.core import urlresolvers,serializers
+from django.template import RequestContext
 from lieswetellourselves.lies.models import Lie,Vote
 from lieswetellourselves.lies.forms import LieForm
 from lieswetellourselves.lies.json_encode import json_encode
@@ -45,4 +46,4 @@ def list_lies(request):
     if(request.is_ajax()):
         return HttpResponse(json_encode(object_list))
     else:
-        return render_to_response('lies/lie_list.html', {'object_list':object_list, 'form': LieForm()})
+        return render_to_response('lies/lie_list.html', {'object_list':object_list, 'form': LieForm()}, context_instance=RequestContext(request))
