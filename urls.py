@@ -14,9 +14,8 @@ urlpatterns = patterns('',
 
     # Uncomment the next line for to enable the admin:
     # (r'^admin/(.*)', admin.site.root),
-#    (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': '/home/firstclown/Projects/lieswetellourselves/media'}),
     (r'', include('lieswetellourselves.lies.urls')),
 
 )
 if settings.DEBUG:
-        urlpatterns += patterns('', (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),) 
+        urlpatterns = patterns('', (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),) + urlpatterns

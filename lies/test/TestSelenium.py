@@ -6,7 +6,7 @@ import unittest, time, re
 class TestSelenium(TestCase):
     fixtures = ['data.json']
     def setUp(self):
-        self.start_test_server('0.0.0.0', 8000)
+        
         self.verificationErrors = []
         self.selenium = selenium("localhost", 4444, "*firefox /usr/lib/firefox-3.0.1/firefox", "http://localhost:8000/")
         self.selenium.start()
@@ -46,13 +46,13 @@ class TestSelenium(TestCase):
 
     def test_cssLocation(self):
         sel = self.selenium
+        sel.set_speed("200")
         sel.open("/")
         self.failUnless(sel.is_text_present('"' + settings.MEDIA_URL + 'reset-fonts-grids.css"'))
 
     def tearDown(self):
         self.selenium.stop()
         self.assertEqual([], self.verificationErrors)
-        self.stop_test_server()
 
 if __name__ == "__main__":
     unittest.main()
