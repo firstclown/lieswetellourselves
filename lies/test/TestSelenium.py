@@ -1,5 +1,6 @@
 from selenium import selenium
 from django.test import TestCase
+from lieswetellourselves import settings
 import unittest, time, re
 
 class TestSelenium(TestCase):
@@ -42,7 +43,12 @@ class TestSelenium(TestCase):
         sel.mouse_over("//li[@id='lie_4']")
         sel.click("//a[@id='vote_up']/img")
         self.assertEqual("1", sel.get_text("//li[@id='lie_4']/span[1]"))
-    
+
+    def test_cssLocation(self):
+        sel = self.selenium
+        sel.open("/")
+        self.failUnless(sel.is_text_present('"' + settings.MEDIA_URL + 'reset-fonts-grids.css"'))
+
     def tearDown(self):
         self.selenium.stop()
         self.assertEqual([], self.verificationErrors)
