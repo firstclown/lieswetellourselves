@@ -20,7 +20,7 @@ class Lie(models.Model):
     modified = models.DateTimeField(auto_now=True)
 
     def get_absolute_url(self):
-        return ('lie_detail',  [str(self.id)])
+        return ('lie_detail',  [unicode(self.id)])
     get_absolute_url = permalink(get_absolute_url)
 
     def vote_total(self):
@@ -58,6 +58,6 @@ class Vote(models.Model):
     value = models.IntegerField()
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
-    def to_str(self):
-        "For %s with value %i" % (lie.id, value)
+    def __unicode__(self):
+        u"For %s with value %i" % (lie.id, value)
 
