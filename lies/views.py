@@ -28,8 +28,8 @@ def add_vote(request):
             request.session['voted_items'] = voted_items
 
             lie.modified = datetime.now()
-            lie.save()
             lie.vote_total_value = lie.vote_total()
+            lie.save()
         else:
             return HttpResponse('dupe')
     except(IndexError):
@@ -45,13 +45,11 @@ def list_lies_page(request,page_num,sort_by):
     object_list = Lie.objects.all().order_by(real_sort_by)
     object_pages = Paginator(object_list, 10)
     object_page = object_pages.page(page_num)
-    for lie in object_page.object_list:
-        lie.vote_total_value = lie.vote_total()
     if(request.is_ajax()):
         return HttpResponse(json_encode(object_page.object_list))
     else:
         return render_to_response('lies/lie_list.html', {'pager':object_page, 'form': LieForm()}, context_instance=RequestContext(request))
 
 def __get_sort_by(sort_by):
-    sort_by_list = ('-modified', 'modified')
+    sort_by_list = ('-modified', 'modified', 'vote_total_value', '-vote_total_value')
     return (sort_by if (sort_by in sort_by_list) else '-modified')

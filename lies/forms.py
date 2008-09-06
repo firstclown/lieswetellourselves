@@ -4,3 +4,4 @@ from lieswetellourselves.lies.models import Lie
 class LieForm(forms.ModelForm):
     class Meta:
         model = Lie
+        fields = ('lie', )

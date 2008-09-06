@@ -17,10 +17,14 @@ class Lie(models.Model):
     lie = models.CharField(max_length=200)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
+    vote_total_value = models.IntegerField(default=0)
 
     def get_absolute_url(self):
         return ('lie_detail',  [unicode(self.id)])
     get_absolute_url = models.permalink(get_absolute_url)
+
+    def __unicode__(self):
+        return u'%s' % self.lie
 
     def vote_total(self):
         """
