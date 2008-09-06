@@ -40,17 +40,9 @@ def add_vote(request):
     else:
         return HttpResponseRedirect(urlresolvers.reverse('index'))
 
-def list_lies(request):
-    object_list = Lie.objects.all().order_by('-modified')
-    for lie in object_list:
-        lie.vote_total_value = lie.vote_total()
-    if(request.is_ajax()):
-        return HttpResponse(json_encode(object_list))
-    else:
-        return render_to_response('lies/lie_list.html', {'object_list':object_list, 'form': LieForm()}, context_instance=RequestContext(request))
-
-def list_lies_page(request,page_num):
-    object_list = Lie.objects.all().order_by('-modified')
+def list_lies_page(request,page_num,sort_by):
+    real_sort_by = __get_sort_by(sort_by)
+    object_list = Lie.objects.all().order_by(real_sort_by)
     object_pages = Paginator(object_list, 10)
     object_page = object_pages.page(page_num)
     for lie in object_page.object_list:
@@ -59,3 +51,7 @@ def list_lies_page(request,page_num):
         return HttpResponse(json_encode(object_page.object_list))
     else:
         return render_to_response('lies/lie_list.html', {'pager':object_page, 'form': LieForm()}, context_instance=RequestContext(request))
+
+def __get_sort_by(sort_by):
+    sort_by_list = ('-modified', 'modified')
+    return (sort_by if (sort_by in sort_by_list) else '-modified')

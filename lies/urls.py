@@ -12,8 +12,9 @@ info_dict = {
 
 urlpatterns = patterns('',
 #    (r'^$', 'index'),
-    url(r'^$', 'lieswetellourselves.lies.views.list_lies_page', {'page_num':1}, name='index', ),
-    url(r'^page/(?P<page_num>\d+)/$', 'lieswetellourselves.lies.views.list_lies_page', name='paged', ),
+    url(r'^$', 'lieswetellourselves.lies.views.list_lies_page', {'page_num':1, 'sort_by':'-modified'}, name='index', ),
+    url(r'^page/(?P<page_num>\d+)/$', 'lieswetellourselves.lies.views.list_lies_page', {'sort_by':'-modified'}, name='paged', ),
+    url(r'^(?P<sort_by>[-_a-z]+)/(?P<page_num>\d+)/$', 'lieswetellourselves.lies.views.list_lies_page', name='sorted_page', ),
     url(r'^add/$', 'django.views.generic.create_update.create_object', {'form_class': LieForm}),
     url(r'^add_vote/$', 'lieswetellourselves.lies.views.add_vote'),
 #    (r'^add/$', 'lieswetellourselves.lies.views.add'),
