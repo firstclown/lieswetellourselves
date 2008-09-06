@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models import permalink
 
 class Lie(models.Model):
     """
@@ -21,7 +20,7 @@ class Lie(models.Model):
 
     def get_absolute_url(self):
         return ('lie_detail',  [unicode(self.id)])
-    get_absolute_url = permalink(get_absolute_url)
+    get_absolute_url = models.permalink(get_absolute_url)
 
     def vote_total(self):
         """
