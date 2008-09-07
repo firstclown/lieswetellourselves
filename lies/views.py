@@ -45,9 +45,6 @@ def list_lies_page(request,page_num,sort_by):
     object_list = Lie.objects.all().order_by(real_sort_by)
     object_pages = Paginator(object_list, 10)
     object_page = object_pages.page(page_num)
-    for lie in object_page.object_list:
-        lie.vote_total_value = lie.vote_total()
-        lie.save()
     if(request.is_ajax()):
         return HttpResponse(json_encode(object_page.object_list))
     else:
