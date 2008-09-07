@@ -29,7 +29,7 @@ body {
     font-variant: small-caps;
 }
 
-#bd ul li {
+#bd ul#lie_list li {
     padding: 3%;
     color: #c2bfff;
     list-style-type: none;
@@ -37,6 +37,26 @@ body {
     margin: 1%;
     background-color: #0c00ff;
     font-size:197%;
+}
+
+#bd #nav_buttons {
+    margin:auto;
+    text-align:center;
+}
+
+#bd #nav_buttons a {
+    color: #857fff;
+}
+
+#bd #nav_buttons ul li {
+    list-style-type: none;
+    display: inline;
+    margin-left: 5px;
+    margin-right: 5px;
+    border: #0c00ff 1px solid;
+    padding: 5px;
+    font-size: 65%;
+    font-weight: bold;
 }
 
 #bd .vote_total {

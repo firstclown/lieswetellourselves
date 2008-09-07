@@ -54,5 +54,5 @@ def list_lies_page(request,page_num,sort_by):
         return render_to_response('lies/lie_list.html', {'pager':object_page, 'form': LieForm()}, context_instance=RequestContext(request))
 
 def __get_sort_by(sort_by):
-    sort_by_list = ('-modified', 'modified', 'vote_total_value', '-vote_total_value')
+    sort_by_list = ('-modified', 'modified', 'vote_total_value', '-vote_total_value', '-created', 'created',)
     return (sort_by if (sort_by in sort_by_list) else '-modified')
