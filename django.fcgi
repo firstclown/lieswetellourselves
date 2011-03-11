@@ -1,8 +1,8 @@
 #!/usr/bin/env python2.5
 import sys, os
 
-sys.path += ['/home/firstclo/django_src']
-sys.path += ['/home/firstclo/django']
+sys.path += ['django_src']
+sys.path += ['django']
 
 from fcgi import WSGIServer
 from django.core.handlers.wsgi import WSGIHandler
